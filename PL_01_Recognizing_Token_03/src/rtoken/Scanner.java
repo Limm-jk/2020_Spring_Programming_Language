@@ -86,7 +86,7 @@ public class Scanner {
 				return result;
 			}
 			// 업데이트
-			stateOld = stateNew;	
+			stateOld = stateNew;
 		}
 		for(TokenType t : TokenType.values()) {
 			if(t.finalState == stateOld) {
@@ -101,11 +101,7 @@ public class Scanner {
 		//과제
 		//입력된 모든 token에 대하여 nextToken으로 식별 후 리스트에 추가하여 반환
 		List<Token> to = new ArrayList<>();
-		Token next = nextToken();
-		while(next != null) {
-			to.add(next);
-			next = nextToken();
-		}
+		
 		return to;
 	}
 
