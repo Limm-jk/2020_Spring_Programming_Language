@@ -8,3 +8,6 @@
 
 #### 2. Recursion
 > * [Make Linked List](https://github.com/Limm-jk/Programming_Language_20_1/blob/master/PL_01_Recursion_02/src/RecursionLinkedList.java)
+
+#### 3. Recognizing Token
+> * [Scanner](https://github.com/Limm-jk/Programming_Language_20_1/blob/master/PL_01_Recognizing_Token_03/src/rtoken/Scanner.java)
