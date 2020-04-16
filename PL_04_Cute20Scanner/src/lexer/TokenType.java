@@ -16,7 +16,17 @@ public enum TokenType {
 		switch ( ch ) {
 			case '+':
 				return PLUS;
-			//?굹癒몄? Special Charactor?뿉 ???빐 ?넗?겙?쓣 諛섑솚?븯?룄濡? ?옉?꽦
+			//나머지 Special Charactor에 대해 토큰을 반환하도록 작성
+			case '-': return MINUS;
+			case '*': return TIMES;
+			case '/': return DIV;
+			case '<': return LT;
+			case '>': return GT;
+			case '=': return EQ;
+			case '(': return L_PAREN;
+			case ')': return R_PAREN;
+			case '\\': return APOSTROPHE;
+			case '?': return QUESTION;
 			default:
 				throw new IllegalArgumentException("unregistered char: " + ch);
 		}

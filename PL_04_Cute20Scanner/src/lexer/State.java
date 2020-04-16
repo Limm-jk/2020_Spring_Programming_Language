@@ -28,14 +28,14 @@ enum State {
 				case DIGIT:
 					context.append(v);
 					return GOTO_ACCEPT_INT;
-				case SPECIAL_CHAR: //special charactor媛? ?뱾?뼱?삩 寃쎌슦 
-					if ( ) { //遺??샇?씤寃쎌슦 ?긽?깭諛섑솚
+				case SPECIAL_CHAR: //special charactor가 들어온 경우 
+					if ( true ) { //부호인경우 상태반환
 						
 					}
-					else if (  ) {  //boolean?씤 寃쎌슦 ?긽?깭諛섑솚
+					else if ( true  ) {  //boolean인 경우 상태반환
 						
 					}
-					else { //洹몄쇅?뿉?뒗 type?쓣 ?븣?븘?궡?꽌 ?븣留욎? ?긽?깭濡? 諛섑솚
+					else { //그외에는 type을 알아내서 알맞은 상태로 반환
 						
 					}
 				case WS:
