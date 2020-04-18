@@ -8,6 +8,9 @@ import static lexer.TransitionOutput.GOTO_MATCHED;
 import static lexer.TransitionOutput.GOTO_SHARP;
 import static lexer.TransitionOutput.GOTO_SIGN;
 import static lexer.TransitionOutput.GOTO_START;
+
+import javax.swing.text.html.FormSubmitEvent;
+
 import static lexer.TokenType.FALSE;
 import static lexer.TokenType.INT;
 import static lexer.TokenType.MINUS;
@@ -29,13 +32,17 @@ enum State {
 					context.append(v);
 					return GOTO_ACCEPT_INT;
 				case SPECIAL_CHAR: //special charactor가 들어온 경우 
-					if ( true ) { //부호인경우 상태반환
-						
+					if ( v == '+' || v=='-') { //부호인경우 상태반환
+						context.append(v);
+						return GOTO_SIGN;
 					}
-					else if ( true  ) {  //boolean인 경우 상태반환
-						
+					else if ( v == '#'  ) {  //boolean인 경우 상태반환
+						context.append(v);
+						return GOTO_SHARP;
 					}
 					else { //그외에는 type을 알아내서 알맞은 상태로 반환
+						context.append(v);
+						return GOTO_MATCHED(TokenType.fromSpecialCharactor(v), context.getLexime());
 						
 					}
 				case WS:
