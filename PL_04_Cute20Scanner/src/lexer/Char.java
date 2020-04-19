@@ -1,6 +1,5 @@
 package lexer;
 
-
 class Char {
 	private final char value;
 	private final CharacterType type;
