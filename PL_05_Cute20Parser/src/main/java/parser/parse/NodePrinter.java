@@ -7,7 +7,7 @@ import java.io.PrintWriter;
 import parser.ast.*;
 
 public class NodePrinter {
-    private final String OUTPUT_FILENAME = "./output06.txt";
+    private final String OUTPUT_FILENAME = "output06.txt";
     private StringBuffer sb = new StringBuffer();
     private Node root;
 
