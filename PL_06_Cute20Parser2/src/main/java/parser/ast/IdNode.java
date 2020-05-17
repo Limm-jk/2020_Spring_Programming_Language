@@ -1,10 +1,16 @@
 package parser.ast;
 
-public class IdNode extends Node{
-	public String value;
+public class IdNode extends QuotableNodeImpl implements ValueNode {
+    String idString;
 
-	@Override
-	public String toString(){
-		return "ID: " + value;
-	}
+    public IdNode(String text) {
+        idString = text;
+    }
+
+    @Override
+    public String toString() {
+        return "ID:" + idString;
+    }
+
+
 }

@@ -14,33 +14,43 @@ public class NodePrinter {
     public NodePrinter(Node root) {
         this.root = root;
     }
-
-    private void printList(Node head) {
-        if (head == null) {
+ // ListNode, ‘ Node, Node에 대한 printNode 함수를 각각 overload 형식으로 작성
+    private void printList(ListNode li) {
+        if (li == ListNode.EMPTYLIST) {
             sb.append("( )");
             return;
         }
-        sb.append("(");
-        printNode(head);
-        sb.append(")");
+        if(li == ListNode.ENDLIST)
+        	return;
+        printNode(li.car());
+        if(li.cdr() != null) printList(li.cdr());
     }
 
-    private void printNode(Node head) {
-        if (head == null)
+    private void printNode(Node node) {
+        if (node == null)
             return;
 
-        if (head instanceof ListNode) {
-            ListNode ln = (ListNode) head;
-            printList(ln.value);
-
-        } else {
-            sb.append("[" + head + "]");
-        }
-
-        if (head.getNext() != null) {
-            sb.append(" ");
-        }
-        printNode(head.getNext());
+        if (node instanceof ListNode) {
+            ListNode ln = (ListNode) node;
+            
+            if (ln.car() instanceof QuoteNode) {
+            	//To Do
+            	sb.append("\'");
+            	printNode(ln.cdr());
+            }
+            else {
+            	if ((ln.car() instanceof ListNode) && ((ListNode)(ln.car())).car() instanceof QuoteNode){
+            		printList(ln);
+            	}
+            	else {
+	            	sb.append("( ");
+	            	printList(ln);
+	            	sb.append(" ) ");
+            	}	
+            }
+        } 
+        
+        else sb.append("[" + node + "] ");
     }
 
     public void prettyPrint() {

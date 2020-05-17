@@ -1,49 +1,90 @@
 package parser.ast;
 
+import lexer.TokenType;
+
 import java.util.HashMap;
 import java.util.Map;
 
-import lexer.TokenType;
 
+public class FunctionNode extends QuotableNodeImpl implements ValueNode {
+    FunctionType funcType;
 
-public class FunctionNode extends Node{
+    public FunctionNode(TokenType tType) {
+        FunctionType fType = FunctionType.getFunctionType(tType);
+        funcType = fType;
+    }
 
-	public enum FunctionType {
-		ATOM_Q 	{ TokenType tokenType() {return TokenType.ATOM_Q;} },
-		CAR 	{ TokenType tokenType() {return TokenType.CAR;} },
-		CDR 	{ TokenType tokenType() {return TokenType.CDR;} },
-		COND 	{ TokenType tokenType() {return TokenType.COND;} },
-		CONS 		{ TokenType tokenType() {return TokenType.CONS;} },
-		DEFINE 		{ TokenType tokenType() {return TokenType.DEFINE;} },
-		EQ_Q 		{ TokenType tokenType() {return TokenType.EQ_Q;} },
-		LAMBDA 		{ TokenType tokenType() {return TokenType.LAMBDA;} },
-		NOT 		{ TokenType tokenType() {return TokenType.NOT;} },
-		NULL_Q 		{ TokenType tokenType() {return TokenType.NULL_Q;} };
+    @Override
+    public String toString() {
+        return funcType.name();
+    }
 
-		private static Map<TokenType, FunctionType> fromTokenType = new HashMap<TokenType, FunctionType>();
+    public enum FunctionType {
+        DEFINE {
+            TokenType tokenType() {
+                return TokenType.DEFINE;
+            }
+        },
+        LAMBDA {
+            TokenType tokenType() {
+                return TokenType.LAMBDA;
+            }
+        },
+        COND {
+            TokenType tokenType() {
+                return TokenType.COND;
+            }
+        },
+        NOT {
+            TokenType tokenType() {
+                return TokenType.NOT;
+            }
+        },
+        CDR {
+            TokenType tokenType() {
+                return TokenType.CDR;
+            }
+        },
+        CAR {
+            TokenType tokenType() {
+                return TokenType.CAR;
+            }
+        },
+        CONS {
+            TokenType tokenType() {
+                return TokenType.CONS;
+            }
+        },
+        EQ_Q {
+            TokenType tokenType() {
+                return TokenType.EQ_Q;
+            }
+        },
+        NULL_Q {
+            TokenType tokenType() {
+                return TokenType.NULL_Q;
+            }
+        },
+        ATOM_Q {
+            TokenType tokenType() {
+                return TokenType.ATOM_Q;
+            }
+        };
 
-		static {
-			for (FunctionType tType : FunctionType.values()){
-				fromTokenType.put(tType.tokenType(), tType);
-			}
-		}
+        private static Map<TokenType, FunctionType> fromTokenType = new HashMap<TokenType, FunctionType>();
 
-		static FunctionType getBinType(TokenType tType){
-			return fromTokenType.get(tType);
-		}
+        static {
+            for (FunctionType fType : FunctionType.values()) {
+                fromTokenType.put(fType.tokenType(), fType);
+            }
+        }
 
-		abstract TokenType tokenType();
+        static FunctionType getFunctionType(TokenType tType) {
+            return fromTokenType.get(tType);
+        }
 
-	}
+        abstract TokenType tokenType();
 
-	public FunctionType value;
-	
-	@Override
-	public String toString(){
-		return value.name();
-	}
+    }
 
-	public void setValue(TokenType tType) {
-		value = FunctionType.getBinType(tType);
-	}
 }

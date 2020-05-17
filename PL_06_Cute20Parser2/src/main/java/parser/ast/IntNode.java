@@ -1,12 +1,16 @@
 package parser.ast;
 
 
+public class IntNode extends QuotableNodeImpl implements ValueNode {
+    private Integer value;
 
-public class IntNode extends Node {
-	public int value;
-	
-	@Override
-	public String toString(){
-		return "INT: " + Integer.toString(value);
-	}
+    public IntNode(String text) {
+        this.value = new Integer(text);
+    }
+
+    @Override
+    public String toString() {
+        return "INT:" + value;
+    }
+
 }

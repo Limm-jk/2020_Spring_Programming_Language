@@ -18,6 +18,7 @@ import lexer.TokenType;
 
 public class CuteParser {
 	private Iterator<Token> tokens;
+	private static Node END_OF_LIST = new Node() {};
 
 	public CuteParser(File file) {
 		try {
@@ -44,15 +45,11 @@ public class CuteParser {
 
 		switch (tType) {
 		case ID:
-			IdNode idNode = new IdNode();
-			idNode.value = tLexeme;
-			return idNode;
+			return new IdNode(tLexeme);
 		case INT:
-			IntNode intNode = new IntNode();
 			if (tLexeme == null)
 				System.out.println("???");
-			intNode.value = new Integer(tLexeme);
-			return intNode;
+			return new IntNode(tLexeme);
 
 		// BinaryOpNode에 대하여 작성
 		// +, -, /, *가 해당
@@ -64,8 +61,7 @@ public class CuteParser {
 		case TIMES:
 		case LT:
 		
-			BinaryOpNode Bo = new BinaryOpNode();
-			Bo.setValue(tType);
+			BinaryOpNode Bo = new BinaryOpNode(tType);
 			return Bo;
 
 		// FunctionNode에 대하여 작성
@@ -80,32 +76,39 @@ public class CuteParser {
 		case LAMBDA:
 		case NOT:
 		case NULL_Q:
-			FunctionNode FN = new FunctionNode();
-			FN.setValue(tType);
+			FunctionNode FN = new FunctionNode(tType);
 			return FN;
 
 		// BooleanNode에 대하여 작성
 		case FALSE:
-			BooleanNode falseNode = new BooleanNode();
-			falseNode.value = false;
-			return falseNode;
+			return BooleanNode.FALSE_NODE;
 		case TRUE:
-			BooleanNode trueNode = new BooleanNode();
-			trueNode.value = true;
-			return trueNode;
+			return BooleanNode.TRUE_NODE;
 
 		// case L_PAREN일 경우와 case R_PAREN일 경우에 대해서 작성
 		// L_PAREN일 경우 parseExprList()를 호출하여 처리
 		case L_PAREN:
-			ListNode LN = new ListNode();
-			LN.value = parseExprList();
-			return LN;
+			return parseExprList();
 
 		case R_PAREN:
-			return null;
+			return END_OF_LIST;
 
+		case APOSTROPHE:
+			QuoteNode quoteNode = new QuoteNode();
+			Node QuotedNode = parseExpr();
+			if(QuotedNode instanceof ListNode) {
+				((ListNode) QuotedNode).setQuotedIn();
+				ListNode listNode = ListNode.cons(quoteNode, (ListNode)QuotedNode);
+				return listNode;
+			}
+			else if(QuotedNode instanceof QuotableNode) {
+				((QuotableNode) QuotedNode).setQuoted();
+				ListNode li = ListNode.cons(QuotedNode, ListNode.ENDLIST);
+				ListNode listNode = ListNode.cons(quoteNode, li);
+				return listNode;
+			}
+		
 		default:
-			// head의 next를 만들고 head를 반환하도록 작성
 			System.out.println("Parsing Error!");
 			return null;
 		}
@@ -113,12 +116,17 @@ public class CuteParser {
 	}
 
 	// List의 value를 생성하는 메소드
-	private Node parseExprList() {
+	private ListNode parseExprList() {
 		Node head = parseExpr();
 		// head의 next 노드를 set하시오.
 		if (head == null) // if next token is RPAREN
 			return null;
-		head.setNext(parseExprList());
-		return head;
+		if(head == END_OF_LIST)
+			return ListNode.ENDLIST;
+		ListNode tail = parseExprList();
+		if(tail == null)
+			return null;
+		
+		return ListNode.cons(head, tail);
 	}
 }

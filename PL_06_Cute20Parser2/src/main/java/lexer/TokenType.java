@@ -25,7 +25,7 @@ public enum TokenType {
 			case '=': return EQ;
 			case '(': return L_PAREN;
 			case ')': return R_PAREN;
-			case '\\': return APOSTROPHE;
+			case '\'': return APOSTROPHE;
 			case '?': return QUESTION;
 			default:
 				throw new IllegalArgumentException("unregistered char: " + ch);
