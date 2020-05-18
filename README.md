@@ -22,4 +22,4 @@
 > * [parser2](https://github.com/Limm-jk/2020_Spring_Programming_Language/tree/master/PL_06_Cute20Parser2/src/main/java/parser)
 
 #### 7. Built-in_Functions
-> * [parser2](/)
+> * [Built-in](/tree/)
