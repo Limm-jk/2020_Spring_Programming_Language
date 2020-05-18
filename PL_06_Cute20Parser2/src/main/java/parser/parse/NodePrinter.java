@@ -42,6 +42,8 @@ public class NodePrinter {
             	if ((ln.car() instanceof ListNode) && ((ListNode)(ln.car())).car() instanceof QuoteNode){
             		printList(ln);
             	}
+            	else if(ln.cdr().car() == null)
+            		printNode(ln.car());
             	else {
 	            	sb.append("( ");
 	            	printList(ln);
